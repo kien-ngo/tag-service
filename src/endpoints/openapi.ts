@@ -21,7 +21,7 @@ export const openApiEndpoint = (app: Hono<BlankEnv, BlankSchema, "/">) =>
 			},
 			servers: [
 				{
-					url: `http://${envs.HOST}:${envs.SERVER_PORT}`,
+					url: `${envs.HOST}${envs.SERVER_PORT ? `:${envs.SERVER_PORT}` : ''}`,
 					description: "Tag staging server",
 				},
 			],
