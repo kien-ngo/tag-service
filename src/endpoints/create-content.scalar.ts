@@ -29,6 +29,15 @@ export const createContentScalar = describeRoute({
 							description: "The content string (URL, file path, etc.)",
 							example: "https://example.com/article",
 						},
+						tags: {
+							type: "array",
+							items: {
+								type: "string",
+							},
+							description:
+								"Optional array of tag names to associate with the content",
+							example: ["important", "work", "project"],
+						},
 					},
 				},
 			},

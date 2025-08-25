@@ -49,7 +49,7 @@ export const addTagsEndpoint = async (c: Context<{}, "/add-tags", {}>) => {
 			message: "Tags added successfully",
 		});
 	} catch (error) {
-		console.error(error)
+		console.error(error);
 		return c.json(
 			{
 				success: false,
