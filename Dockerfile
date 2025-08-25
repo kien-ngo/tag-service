@@ -15,12 +15,8 @@ COPY . .
 # Build the application (if there's a build step, otherwise this can be omitted)
 # RUN bun run check-types
 
-# Set default port value that can be overridden
-ARG SERVER_PORT=4444
-ENV SERVER_PORT=${SERVER_PORT}
-
 # Expose the port the app runs on
-EXPOSE ${SERVER_PORT}
+EXPOSE 3000
 
 # Start the application
 CMD ["bun", "run", "src/index.ts"]
