@@ -1,0 +1,8 @@
+- This is a basic web api server using Hono and Bun runtime. So use Bun instead of Node whenever possible.
+- The database schema is declared inside `./src/db-schema.ts`.
+- The endpoints are listed inside `./src/endpoints`
+- We use Scalar for the API playground. For each endpoint that requires Scalar, declare an `<endpoint-name>.scalar.ts` file. For example, `health.ts` is the endpoint, `health.scalar.ts` is the file that exports the Scalar interface for the health endpoint.
+- After all changes are done, run `bun lint:fix` to lint the code using Biome
+- Following Biome conventions: Use `Number.isNaN` over `isNaN`, `Number.parseInt` over `parseInt` etc.
+- Use `zod` for runtime validation
+- The port that is running the web server can be checked inside .env file, SERVER_PORT

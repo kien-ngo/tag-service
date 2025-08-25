@@ -1,0 +1,26 @@
+{
+  "name": "tag-service",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "lint": "biome check src",
+    "lint:fix": "biome check src --fix",
+    "check-types": "tsc --noEmit",
+    "infra:start": "docker-compose up -d",
+    "infra:stop": "docker-compose down"
+  },
+  "dependencies": {
+    "@scalar/hono-api-reference": "^0.9.15",
+    "@t3-oss/env-core": "^0.13.8",
+    "hono": "^4.9.4",
+    "hono-openapi": "^0.4.8",
+    "kysely": "^0.28.5",
+    "pg": "^8.16.3",
+    "zod": "^4.1.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.2.2",
+    "@types/bun": "latest",
+    "@types/pg": "^8.15.5",
+    "typescript": "^5.9.2"
+  }
+}
