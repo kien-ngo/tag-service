@@ -64,6 +64,6 @@ app.get("/search-contents", searchContentsScalar, (c) =>
 /* ------------------------------------ ROUTES -------------------------------------*/
 
 export default {
-	port: Number(envs.SERVER_PORT),
+	port: Number(envs.SERVER_PORT || 4444),
 	fetch: app.fetch,
 };
