@@ -40,6 +40,7 @@ export const deleteTagsEndpoint = async (
 			message: "Tags removed successfully",
 		});
 	} catch (error) {
+		console.error(error)
 		return c.json(
 			{
 				success: false,

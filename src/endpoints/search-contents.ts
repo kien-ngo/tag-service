@@ -40,6 +40,7 @@ export const searchContentsEndpoint = async (
 			data: contents,
 		});
 	} catch (error) {
+		console.error(error)
 		return c.json(
 			{
 				success: false,

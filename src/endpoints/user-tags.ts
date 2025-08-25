@@ -26,6 +26,7 @@ export const getUserTagsEndpoint = async (c: Context<{}, "/user-tags", {}>) => {
 			data: tags.map((tag) => tag.name),
 		});
 	} catch (error) {
+		console.error(error)
 		return c.json(
 			{
 				success: false,
