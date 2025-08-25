@@ -1,6 +1,7 @@
 import type { Hono } from "hono";
 import type { BlankEnv, BlankSchema } from "hono/types";
 import { openAPISpecs } from "hono-openapi";
+import { envs } from "../env";
 
 export const openApiEndpoint = (app: Hono<BlankEnv, BlankSchema, "/">) =>
 	openAPISpecs(app, {
@@ -20,7 +21,7 @@ export const openApiEndpoint = (app: Hono<BlankEnv, BlankSchema, "/">) =>
 			},
 			servers: [
 				{
-					url: "http://localhost:4444",
+					url: `http://${envs.HOST}:${envs.SERVER_PORT}`,
 					description: "Tag staging server",
 				},
 			],
