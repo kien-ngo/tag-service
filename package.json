@@ -2,6 +2,7 @@
   "name": "tag-service",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
+    "server": "bun run src/index.ts",
     "lint": "biome check src",
     "lint:fix": "biome check src --fix",
     "check-types": "tsc --noEmit",
@@ -15,7 +16,6 @@
     "hono": "^4.9.4",
     "hono-openapi": "^0.4.8",
     "kysely": "^0.28.5",
-    "pg": "^8.16.3",
     "zod": "^4.1.1"
   },
   "devDependencies": {
