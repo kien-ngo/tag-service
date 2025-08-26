@@ -9,6 +9,7 @@
     "infra:stop": "docker-compose down"
   },
   "dependencies": {
+    "@ratiu5/kysely-bun-psql": "^0.0.3",
     "@scalar/hono-api-reference": "^0.9.15",
     "@t3-oss/env-core": "^0.13.8",
     "hono": "^4.9.4",

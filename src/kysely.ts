@@ -1,13 +1,10 @@
-import { Kysely, PostgresDialect } from "kysely";
-import { Pool } from "pg";
+import { BunDialect } from "@ratiu5/kysely-bun-psql";
+import { Kysely } from "kysely";
 import type { Database } from "./db-schema";
 import { envs } from "./env";
-import { encodePostgresConnectionString } from "./utils/encodePostgresConnectionString";
 
-const dialect = new PostgresDialect({
-	pool: new Pool({
-		connectionString: encodePostgresConnectionString(envs.DATABASE_URL),
-	}),
+const dialect = new BunDialect({
+	url: envs.DATABASE_URL,
 });
 
 export const db = new Kysely<Database>({

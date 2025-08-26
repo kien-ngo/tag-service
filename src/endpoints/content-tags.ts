@@ -29,7 +29,7 @@ export const getContentTagsEndpoint = async (
 			data: tags.map((tag) => tag.name),
 		});
 	} catch (error) {
-		console.error(error)
+		console.error(error);
 		return c.json(
 			{
 				success: false,

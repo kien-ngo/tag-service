@@ -76,7 +76,7 @@ export const createContentEndpoint = async (
 			data: newContent,
 		});
 	} catch (error) {
-		console.error(error)
+		console.error(error);
 		return c.json(
 			{
 				success: false,
