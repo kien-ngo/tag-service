@@ -1,22 +1,17 @@
-# Use the official Bun image
+# Base image with Bun
 FROM oven/bun:latest as base
-
 WORKDIR /usr/src/app
 
-# Copy package.json and bun.lockb (if available)
+# Install dependencies separately (better layer caching)
+FROM base as deps
 COPY package.json bun.lock* ./
-
-# Install dependencies
 RUN bun install --frozen-lockfile
 
-# Copy the rest of the application code
+# Only copy source after deps
+FROM base as app
+COPY --from=deps /usr/src/app/node_modules ./node_modules
 COPY . .
 
-# Build the application (if there's a build step, otherwise this can be omitted)
-# RUN bun run check-types
-
-# Expose the port the app runs on
+# Expose and run
 EXPOSE 3000
-
-# Start the application
 CMD ["bun", "run", "src/index.ts"]
