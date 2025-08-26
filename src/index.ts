@@ -9,6 +9,7 @@ import { createContentScalar } from "./endpoints/create-content.scalar";
 import { deleteTagsEndpoint } from "./endpoints/delete-tags";
 import { deleteTagsScalar } from "./endpoints/delete-tags.scalar";
 import { docsEndpoint } from "./endpoints/docs";
+import { getContentEndpoint } from "./endpoints/get-content";
 import { healthEndpoint } from "./endpoints/health";
 import { healthScalar } from "./endpoints/health.scalar";
 import { openApiEndpoint } from "./endpoints/openapi";
@@ -19,6 +20,7 @@ import { searchTagsScalar } from "./endpoints/search-tags.scalar";
 import { getUserTagsEndpoint } from "./endpoints/user-tags";
 import { getUserTagsScalar } from "./endpoints/user-tags.scalar";
 import { envs } from "./env";
+import { getContentScalar } from "./endpoints/get-content.scalar";
 
 const app = new Hono();
 
@@ -61,6 +63,8 @@ app.get("/search-tags", searchTagsScalar, (c) => searchTagsEndpoint(c));
 app.get("/search-contents", searchContentsScalar, (c) =>
 	searchContentsEndpoint(c),
 );
+// List contents of a userId (from on orgId)
+app.get("/get-content", getContentScalar, (c) => getContentEndpoint(c));
 /* ------------------------------------ ROUTES -------------------------------------*/
 
 export default {
