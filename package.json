@@ -2,7 +2,7 @@
   "name": "tag-service",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "server": "bun run src/index.ts",
+    "serve": "bun run src/index.ts",
     "lint": "biome check src",
     "lint:fix": "biome check src --fix",
     "check-types": "tsc --noEmit",
