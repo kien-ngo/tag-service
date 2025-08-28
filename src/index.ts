@@ -21,8 +21,13 @@ import { searchTagsScalar } from "./endpoints/search-tags.scalar";
 import { getUserTagsEndpoint } from "./endpoints/user-tags";
 import { getUserTagsScalar } from "./endpoints/user-tags.scalar";
 import { envs } from "./env";
+import { cors } from "hono/cors";
+import { deleteContentScalar } from "./endpoints/delete-content.scalar";
+import { deleteContentEndpoint } from "./endpoints/delete-content";
 
 const app = new Hono();
+
+app.use("*", cors({origin : "*"}))
 
 app.use(logger());
 /* ------------------------------------ ROUTES -------------------------------------*/
@@ -65,6 +70,9 @@ app.get("/search-contents", searchContentsScalar, (c) =>
 );
 // List contents of a userId (from on orgId)
 app.get("/get-content", getContentScalar, (c) => getContentEndpoint(c));
+
+// Delete content
+app.get("/delete-content", deleteContentScalar, (c) => deleteContentEndpoint(c));
 /* ------------------------------------ ROUTES -------------------------------------*/
 
 export default {
