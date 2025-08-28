@@ -76,6 +76,7 @@ app.get("/delete-content", deleteContentScalar, (c) => deleteContentEndpoint(c))
 /* ------------------------------------ ROUTES -------------------------------------*/
 
 export default {
-	port: Number(envs.SERVER_PORT || 4444),
+	port: 6666,
 	fetch: app.fetch,
+	host: '0.0.0.0'
 };
