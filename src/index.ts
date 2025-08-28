@@ -10,6 +10,7 @@ import { deleteTagsEndpoint } from "./endpoints/delete-tags";
 import { deleteTagsScalar } from "./endpoints/delete-tags.scalar";
 import { docsEndpoint } from "./endpoints/docs";
 import { getContentEndpoint } from "./endpoints/get-content";
+import { getContentScalar } from "./endpoints/get-content.scalar";
 import { healthEndpoint } from "./endpoints/health";
 import { healthScalar } from "./endpoints/health.scalar";
 import { openApiEndpoint } from "./endpoints/openapi";
@@ -20,7 +21,6 @@ import { searchTagsScalar } from "./endpoints/search-tags.scalar";
 import { getUserTagsEndpoint } from "./endpoints/user-tags";
 import { getUserTagsScalar } from "./endpoints/user-tags.scalar";
 import { envs } from "./env";
-import { getContentScalar } from "./endpoints/get-content.scalar";
 
 const app = new Hono();
 
