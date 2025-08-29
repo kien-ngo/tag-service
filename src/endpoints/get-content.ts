@@ -13,6 +13,10 @@ const getContentQuerySchema = z.object({
 		.string()
 		.transform((val) => Number.parseInt(val, 10))
 		.default(50),
+	withTags: z
+		.string()
+		.transform((val) => val === "true")
+		.default("true"),
 });
 
 export const getContentEndpoint = async (
@@ -37,6 +41,40 @@ export const getContentEndpoint = async (
 			.offset(offset)
 			.execute();
 
+		let contentsWithTags = contents;
+
+		if (query.withTags) {
+			const contentIds = contents.map((content) => content.id);
+
+			if (contentIds.length > 0) {
+				const contentTagsData = await db
+					.selectFrom("content_tags")
+					.innerJoin("tags", "content_tags.tag_id", "tags.id")
+					.select([
+						"content_tags.content_id",
+						"tags.id as tag_id",
+						"tags.name as tag_name",
+					])
+					.where("content_tags.content_id", "in", contentIds)
+					.execute();
+
+				contentsWithTags = contents.map((content) => ({
+					...content,
+					tags: contentTagsData
+						.filter((ct) => ct.content_id === content.id)
+						.map((ct) => ({
+							id: ct.tag_id,
+							name: ct.tag_name,
+						})),
+				}));
+			} else {
+				contentsWithTags = contents.map((content) => ({
+					...content,
+					tags: [],
+				}));
+			}
+		}
+
 		const totalCount = await db
 			.selectFrom("contents")
 			.select(db.fn.count("id").as("count"))
@@ -51,7 +89,7 @@ export const getContentEndpoint = async (
 		return c.json({
 			success: true,
 			data: {
-				contents,
+				contents: contentsWithTags,
 				pagination: {
 					page: query.page,
 					perPage: query.perPage,

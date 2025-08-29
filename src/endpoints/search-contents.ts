@@ -6,6 +6,10 @@ const searchContentsQuerySchema = z.object({
 	tags: z.string().transform((val) => val.split(",")),
 	user_id: z.uuid(),
 	organization_id: z.uuid(),
+	withTags: z
+		.string()
+		.transform((val) => val === "true")
+		.default("true"),
 });
 
 export const searchContentsEndpoint = async (
@@ -35,9 +39,43 @@ export const searchContentsEndpoint = async (
 			])
 			.execute();
 
+		let contentsWithTags = contents;
+
+		if (query.withTags) {
+			const contentIds = contents.map((content) => content.id);
+
+			if (contentIds.length > 0) {
+				const contentTagsData = await db
+					.selectFrom("content_tags")
+					.innerJoin("tags", "content_tags.tag_id", "tags.id")
+					.select([
+						"content_tags.content_id",
+						"tags.id as tag_id",
+						"tags.name as tag_name",
+					])
+					.where("content_tags.content_id", "in", contentIds)
+					.execute();
+
+				contentsWithTags = contents.map((content) => ({
+					...content,
+					tags: contentTagsData
+						.filter((ct) => ct.content_id === content.id)
+						.map((ct) => ({
+							id: ct.tag_id,
+							name: ct.tag_name,
+						})),
+				}));
+			} else {
+				contentsWithTags = contents.map((content) => ({
+					...content,
+					tags: [],
+				}));
+			}
+		}
+
 		return c.json({
 			success: true,
-			data: contents,
+			data: contentsWithTags,
 		});
 	} catch (error) {
 		console.error(error);
