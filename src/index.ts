@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { addTagsEndpoint } from "./endpoints/add-tags";
 import { addTagsScalar } from "./endpoints/add-tags.scalar";
@@ -6,6 +7,8 @@ import { getContentTagsEndpoint } from "./endpoints/content-tags";
 import { getContentTagsScalar } from "./endpoints/content-tags.scalar";
 import { createContentEndpoint } from "./endpoints/create-content";
 import { createContentScalar } from "./endpoints/create-content.scalar";
+import { deleteContentEndpoint } from "./endpoints/delete-content";
+import { deleteContentScalar } from "./endpoints/delete-content.scalar";
 import { deleteTagsEndpoint } from "./endpoints/delete-tags";
 import { deleteTagsScalar } from "./endpoints/delete-tags.scalar";
 import { docsEndpoint } from "./endpoints/docs";
@@ -21,13 +24,10 @@ import { searchTagsScalar } from "./endpoints/search-tags.scalar";
 import { getUserTagsEndpoint } from "./endpoints/user-tags";
 import { getUserTagsScalar } from "./endpoints/user-tags.scalar";
 import { envs } from "./env";
-import { cors } from "hono/cors";
-import { deleteContentScalar } from "./endpoints/delete-content.scalar";
-import { deleteContentEndpoint } from "./endpoints/delete-content";
 
 const app = new Hono();
 
-app.use("*", cors({origin : "*"}))
+app.use("*", cors({ origin: "*" }));
 
 app.use(logger());
 /* ------------------------------------ ROUTES -------------------------------------*/
@@ -72,7 +72,9 @@ app.get("/search-contents", searchContentsScalar, (c) =>
 app.get("/get-content", getContentScalar, (c) => getContentEndpoint(c));
 
 // Delete content
-app.get("/delete-content", deleteContentScalar, (c) => deleteContentEndpoint(c));
+app.get("/delete-content", deleteContentScalar, (c) =>
+	deleteContentEndpoint(c),
+);
 /* ------------------------------------ ROUTES -------------------------------------*/
 
 export default {

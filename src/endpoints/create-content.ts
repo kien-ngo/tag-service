@@ -81,6 +81,8 @@ export const createContentEndpoint = async (
 			{
 				success: false,
 				error: "Failed to create content",
+				details: error instanceof Error ? error.message : String(error),
+				stack: error instanceof Error ? error.stack : undefined,
 			},
 			400,
 		);
