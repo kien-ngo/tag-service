@@ -34,6 +34,8 @@ export const getContentTagsEndpoint = async (
 			{
 				success: false,
 				error: "Invalid request parameters",
+				details: error instanceof Error ? error.message : String(error),
+				stack: error instanceof Error ? error.stack : undefined,
 			},
 			400,
 		);

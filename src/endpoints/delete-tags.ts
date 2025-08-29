@@ -45,6 +45,8 @@ export const deleteTagsEndpoint = async (
 			{
 				success: false,
 				error: "Failed to remove tags",
+				details: error instanceof Error ? error.message : String(error),
+				stack: error instanceof Error ? error.stack : undefined,
 			},
 			400,
 		);

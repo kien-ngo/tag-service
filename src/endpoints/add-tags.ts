@@ -54,6 +54,8 @@ export const addTagsEndpoint = async (c: Context<{}, "/add-tags", {}>) => {
 			{
 				success: false,
 				error: "Failed to add tags",
+				details: error instanceof Error ? error.message : String(error),
+				stack: error instanceof Error ? error.stack : undefined,
 			},
 			400,
 		);
