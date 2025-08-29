@@ -26,6 +26,7 @@ export const createContentEndpoint = async (
 			.executeTakeFirstOrThrow();
 
 		// Handle tags if provided
+		const addedTags: Array<{ id: string; name: string }> = [];
 		if (body.tags && body.tags.length > 0) {
 			// Create tags that don't exist and get all tag IDs
 			const tagIds: number[] = [];
@@ -34,7 +35,7 @@ export const createContentEndpoint = async (
 				// Try to find existing tag
 				const existingTag = await db
 					.selectFrom("tags")
-					.select("id")
+					.select(["id", "name"])
 					.where("name", "=", tagName)
 					.where("user_id", "=", body.user_id)
 					.where("organization_id", "=", body.organization_id)
@@ -42,6 +43,7 @@ export const createContentEndpoint = async (
 
 				if (existingTag) {
 					tagIds.push(existingTag.id);
+					addedTags.push({ id: String(existingTag.id), name: existingTag.name });
 				} else {
 					// Create new tag
 					const newTag = await db
@@ -51,9 +53,10 @@ export const createContentEndpoint = async (
 							user_id: body.user_id,
 							organization_id: body.organization_id,
 						})
-						.returning("id")
+						.returning(["id", "name"])
 						.executeTakeFirstOrThrow();
 					tagIds.push(newTag.id);
+					addedTags.push({ id: String(newTag.id), name: newTag.name });
 				}
 			}
 
@@ -73,7 +76,10 @@ export const createContentEndpoint = async (
 
 		return c.json({
 			success: true,
-			data: newContent,
+			data: {
+				...newContent,
+				tags: addedTags,
+			},
 		});
 	} catch (error) {
 		console.error(error);
